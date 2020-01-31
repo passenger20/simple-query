@@ -1,0 +1,13 @@
+{% extends "search.html" %}
+{% block high_search%}
+<!--set the buttons in the web-->
+<div id="select">
+    <ul>
+        <form name="search" action="/search/{{key}}/" method="POST">
+            <input {{checked[0]}} type="radio" name="order" id="r1" value="0" /> <label for="r1"><b>BM-25 Similarity</b></label>
+            <input {{checked[1]}} type="radio" name="order" id="r2" value="1" /> <label for="r2"><b>Semantic Parsing</b></label>
+            <input type="submit" value="ok">
+        </form>
+    </ul>
+</div>
+{% endblock %}

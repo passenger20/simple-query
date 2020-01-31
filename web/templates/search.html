@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Questions Search Engine</title>
+    <style type="text/css">
+        div#doc {width:800px}
+    .pagination-page-info {
+        padding: .6em;
+        padding-left: 0;
+        width: 40em;
+        margin: .5em;
+        margin-left: 0;
+        font-size: 12px;
+    }
+    .pagination-page-info b {
+        color: black;
+        background: #6aa6ed;
+        padding-left: 2px;
+        padding: .1em .25em;
+        font-size: 150%;
+    }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <h1>Questions Search Engine</h1>
+            <form name="search" action="/search/" method="POST">
+                <p>
+                    {% if key %}
+                        <input type="text" name="key_word" value="{{key}}">
+                    {% else %}
+                        <input type="text" name="key_word">
+                    {% endif %}
+                    <input type="submit" value="Search">
+                </p>
+            </form>
+        </div>
+        <hr/>
+        {% block high_search%}
+        {% endblock %}
+<!--        set the content in the web-->
+        {% if error%}
+            {% for doc in docs%}
+            <div id="doc">
+                <ul id="navigation">
+                    {% if selected == 0 %}
+<!--                        variable names and results-->
+                        <p>Similar question: <big><i>{{doc.text | capitalize | striptags}}</i></big><br/>
+                            BM-25 score: <big><i>{{doc.sim}}</i></big><br/>
+                        </p>
+                    {% else %}
+                        <p>Similar question: <big><i>{{doc.text | capitalize | striptags}}</i></big><br/>
+                            NER: <big><i>{{doc.ner}}</i></big><br/>
+                        </p>
+                    {% endif %}
+                </ul>
+            </div>
+            <br/>
+            {% endfor %}
+        {% else %}
+            <p>I'm sorry the page seems to run away！</p>
+        {% endif %}
+
+		<div id="footer">
+			<hr>
+            &copy; 2020 <a href="https://github.com/Liao-Sir/Simple-query/" target="_blank">github.com</a>
+        </div>
+		
+    </div>
+</body>
+</html>
